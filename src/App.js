@@ -12,6 +12,8 @@ export class App extends React.Component {
 			users: this.getInitialUsers()
 		};
 		this.loadUsers = this.loadUsers.bind(this);
+		this.scrollVertical = this.scrollVertical.bind(this);
+		this.scrollHorizontal = this.scrollHorizontal.bind(this);
 	}
 
 	getInitialUsers = () => {
@@ -24,6 +26,7 @@ export class App extends React.Component {
 		if (this.state.users.length <= 0) {
 			this.loadUsers();
 		}
+		this.scrollVertical();
 	}
 
 	showUsers() {
@@ -45,15 +48,35 @@ export class App extends React.Component {
 					users: this.state.users.concat(data.results)
 				});
 				window.sessionStorage.removeItem(userStorageId);
-				window.sessionStorage.setItem(userStorageId, JSON.stringify(data.results));
+				window.sessionStorage.setItem(userStorageId, JSON.stringify(this.state.users));
 			});
+	}
+
+	scrollVertical() {
+		window.onscroll = () => {
+			const isBottomEnd = ((window.innerHeight + window.scrollY) >= document.body.offsetHeight);
+			this.loadSrollEnd(isBottomEnd, false);
+		};
+	}
+
+	scrollHorizontal(event) {
+		let isRightEnd = (event.target.scrollWidth === (event.target.scrollLeft + event.target.clientWidth));
+		setTimeout(
+			this.loadSrollEnd(false, isRightEnd)
+		, 1000);
+	}
+
+	loadSrollEnd(isBottomEnd, isRightEnd) {
+		if ((isBottomEnd || isRightEnd) && this.state.users.length < 100) {
+			this.loadUsers();
+		}
 	}
 
 	render() {
 		return (
 			<div className="App">
 				<HeaderContainer/>
-				<div className="Cards">
+				<div className="Cards" onScroll={this.scrollHorizontal}>
 					{this.showUsers()}
 					<div className="Clearfix"/>
 				</div>
