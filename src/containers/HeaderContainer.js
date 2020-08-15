@@ -3,9 +3,9 @@ import React from 'react';
 export class HeaderContainer extends React.Component {
 	render() {
 		return (
-			<div className="header">
+			<div className="Header">
 				<h1>Qoala Test</h1>
-				<div className="action">
+				<div className="Action">
 					<button>Color</button>
 					<button>Cities</button>
 				</div>

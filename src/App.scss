@@ -1,10 +1,10 @@
 .App {
-  .header {
+  .Header {
     h1 {
       display: inline;
     }
 
-    .action {
+    .Action {
       button {
         &:not(:first-child) {
           margin-left: 5px;
@@ -20,14 +20,56 @@
 
     margin: 10px;
   }
+
+  .Cards {
+    .Card {
+      div {
+        margin-bottom: 10px;
+      }
+
+      .Photo {
+        img {
+          width: 100%;
+        }
+
+        margin: 0 10px 10px;
+        max-width: 72px;
+        float: left;
+      }
+
+      .Order-reversed {
+        .Address {
+          position: absolute;
+          bottom: -30px;
+          left: -82px;
+        }
+
+        display: flex;
+        flex-direction: column-reverse;
+      }
+
+      width: calc(100% - 20px);
+      border: 1px solid #999999;
+      padding: 15px 10px 30px;
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      border-radius: 3px;
+    }
+
+    padding: 20px;
+  }
+
+  .Clearfix {
+    clear: both;
+  }
   
   width: 100%;
 }
 
 @media screen and (min-width: 768px) {
   .App {
-    .header {
-      .action {
+    .Header {
+      .Action {
         button {
           &:not(:first-child) {
             margin-left: 20px;
@@ -40,6 +82,29 @@
       }
 
       margin: 20px 50px;
+    }
+
+    .Cards {
+      .Card {
+        .Photo {
+          margin: 10px auto 20px;
+          float: none;
+        }
+
+        .Order-reversed {
+          .Address {
+            position: relative;
+            bottom: unset;
+            left: unset;
+          }
+
+          display: block;
+          flex-direction: unset;
+        }
+
+        padding: 10px;
+        max-width: 350px;
+      }
     }
   }
 }
