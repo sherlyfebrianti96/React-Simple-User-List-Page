@@ -1,0 +1,45 @@
+.App {
+  .header {
+    h1 {
+      display: inline;
+    }
+
+    .action {
+      button {
+        &:not(:first-child) {
+          margin-left: 5px;
+        }
+
+        padding: 5px 10px;
+      }
+
+      position: absolute;
+      top: 5px;
+      right: 0;
+    }
+
+    margin: 10px;
+  }
+  
+  width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+  .App {
+    .header {
+      .action {
+        button {
+          &:not(:first-child) {
+            margin-left: 20px;
+          }
+
+          padding: 10px 20px;
+        }
+
+        top: 0;
+      }
+
+      margin: 20px 50px;
+    }
+  }
+}
