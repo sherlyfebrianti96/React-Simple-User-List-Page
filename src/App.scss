@@ -23,8 +23,13 @@
 
   .Cards {
     .Card {
+      &:not(:last-child) {
+        margin-bottom: 10px;
+      }
+
       div {
         margin-bottom: 10px;
+        word-break: break-word;
       }
 
       .Photo {
@@ -39,9 +44,9 @@
 
       .Order-reversed {
         .Address {
-          position: absolute;
-          bottom: -30px;
+          bottom: 0;
           left: -82px;
+          margin-bottom: 0;
         }
 
         display: flex;
@@ -50,7 +55,7 @@
 
       width: calc(100% - 20px);
       border: 1px solid #999999;
-      padding: 15px 10px 30px;
+      padding: 10px;
       -webkit-border-radius: 3px;
       -moz-border-radius: 3px;
       border-radius: 3px;
@@ -86,6 +91,10 @@
 
     .Cards {
       .Card {
+        &:not(:last-child) {
+          margin-right: 10px;
+        }
+
         .Photo {
           margin: 10px auto 20px;
           float: none;
@@ -93,18 +102,23 @@
 
         .Order-reversed {
           .Address {
-            position: relative;
             bottom: unset;
             left: unset;
+            margin-bottom: 10px
           }
 
           display: block;
           flex-direction: unset;
         }
 
-        padding: 10px;
         max-width: 350px;
+        display: inline-block;
       }
+
+      overflow-x: scroll;
+      overflow-y: hidden;
+      white-space: nowrap;
+      width: 100%;
     }
   }
 }
