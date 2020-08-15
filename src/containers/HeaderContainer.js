@@ -6,8 +6,8 @@ export class HeaderContainer extends React.Component {
 			<div className="Header">
 				<h1>Qoala Test</h1>
 				<div className="Action">
-					<button>Color</button>
-					<button>Cities</button>
+					<button onClick={this.props.sortByColor}>Color</button>
+					<button onClick={this.props.sortByCity}>Cities</button>
 				</div>
 			</div>
 		);

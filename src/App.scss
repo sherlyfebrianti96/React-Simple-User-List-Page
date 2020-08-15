@@ -118,7 +118,7 @@
       overflow-x: scroll;
       overflow-y: hidden;
       white-space: nowrap;
-      width: 100%;
+      width: calc(100% - 40px);
     }
   }
 }
