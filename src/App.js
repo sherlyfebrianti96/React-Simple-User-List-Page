@@ -3,16 +3,50 @@ import './App.scss';
 import {HeaderContainer} from './containers/HeaderContainer';
 import {CardContainer} from "./containers/CardContainer";
 
-function App() {
-	return (
-		<div className="App">
-			<HeaderContainer/>
-			<div className="Cards">
-				<CardContainer/>
-				<div className="Clearfix" />
-			</div>
-		</div>
-	);
-}
+export class App extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			users: []
+		};
+		this.loadUsers = this.loadUsers.bind(this);
+	}
 
-export default App;
+	componentDidMount() {
+		this.loadUsers()
+	}
+
+	showUsers() {
+		let users = [];
+
+		this.state.users.forEach(user => {
+			users.push(<CardContainer user={user}/>);
+		});
+
+		return users;
+	}
+
+	loadUsers() {
+		fetch('https://randomuser.me/api/?results=10')
+			.then(response => response.json())
+			.then((data) => {
+				console.log('data : ', data);
+				this.setState({
+					users: this.state.users.concat(data.results)
+				});
+				console.log(this.state.users);
+			});
+	}
+
+	render() {
+		return (
+			<div className="App">
+				<HeaderContainer/>
+				<div className="Cards">
+					{this.showUsers()}
+					<div className="Clearfix"/>
+				</div>
+			</div>
+		);
+	}
+}

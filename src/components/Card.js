@@ -10,7 +10,7 @@ export class Card extends React.Component {
 		return (
 			<div className="Card">
 				<div className="Photo">
-					<img src={this.props.image} alt={this.props.fullName}/>
+					{this.props.image && <img src={this.props.image} alt={this.props.fullName}/>}
 				</div>
 				<div className="Fullname">
 					{this.props.fullName}
@@ -32,9 +32,9 @@ export class Card extends React.Component {
 }
 
 Card.defaultProps = {
-	image: '',
-	fullName: '',
-	age: '',
-	address: '',
-	email: ''
+	image: null,
+	fullName: null,
+	age: null,
+	address: null,
+	email: null
 };
