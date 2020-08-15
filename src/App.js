@@ -3,17 +3,27 @@ import './App.scss';
 import {HeaderContainer} from './containers/HeaderContainer';
 import {CardContainer} from "./containers/CardContainer";
 
+const userStorageId = 'users';
+
 export class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			users: []
+			users: this.getInitialUsers()
 		};
 		this.loadUsers = this.loadUsers.bind(this);
 	}
 
+	getInitialUsers = () => {
+		const userStorage = window.sessionStorage.getItem(userStorageId);
+
+		return (userStorage) ? JSON.parse(userStorage) : [];
+	};
+
 	componentDidMount() {
-		this.loadUsers()
+		if (this.state.users.length <= 0) {
+			this.loadUsers();
+		}
 	}
 
 	showUsers() {
@@ -34,7 +44,8 @@ export class App extends React.Component {
 				this.setState({
 					users: this.state.users.concat(data.results)
 				});
-				console.log(this.state.users);
+				window.sessionStorage.removeItem(userStorageId);
+				window.sessionStorage.setItem(userStorageId, JSON.stringify(data.results));
 			});
 	}
 
