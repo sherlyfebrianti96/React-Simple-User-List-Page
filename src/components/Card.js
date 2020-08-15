@@ -1,14 +1,38 @@
 import React from 'react';
 
+const RED = '#feb6cb';
+const GREEN = '#d5fed3';
+const BLUE = '#c3f4fe';
+
 export class Card extends React.Component {
 
 	constructor(props) {
 		super(props);
 	}
 
+	getStyle() {
+		let color;
+		const age = this.props.age;
+
+		switch (true) {
+			case (age < 21) :
+				color = RED;
+				break;
+			case (age > 56) :
+				color = BLUE;
+				break;
+			default:
+				color = GREEN;
+		}
+
+		return {
+			backgroundColor: color
+		};
+	}
+
 	render() {
 		return (
-			<div className="Card">
+			<div className="Card" style={this.getStyle()}>
 				<div className="Photo">
 					{this.props.image && <img src={this.props.image} alt={this.props.fullName}/>}
 				</div>

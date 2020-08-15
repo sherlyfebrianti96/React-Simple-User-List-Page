@@ -19,8 +19,8 @@ export class App extends React.Component {
 	showUsers() {
 		let users = [];
 
-		this.state.users.forEach(user => {
-			users.push(<CardContainer user={user}/>);
+		this.state.users.forEach((user, index) => {
+			users.push(<CardContainer key={index} user={user}/>);
 		});
 
 		return users;
