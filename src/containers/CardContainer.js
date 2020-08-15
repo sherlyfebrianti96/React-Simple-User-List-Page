@@ -1,4 +1,5 @@
 import React from 'react';
+import {Card} from "../components/Card";
 
 // const usersData = require('./../assets/users');
 export class CardContainer extends React.Component {
@@ -34,25 +35,7 @@ export class CardContainer extends React.Component {
 		const userEmail = user.email;
 
 		return (
-			<div className="Card">
-				<div className="Photo">
-					<img src={userPicture.medium} alt={fullName}/>
-				</div>
-				<div className="Fullname">
-					{fullName}
-				</div>
-				<div className="Age">
-					{userDob.age} years old
-				</div>
-				<div className="Order-reversed">
-					<div className="Address">
-						{userAddress}
-					</div>
-					<div className="Email">
-						{userEmail}
-					</div>
-				</div>
-			</div>
+			<Card image={userPicture.medium} fullName={fullName} age={userDob.age} address={userAddress} email={userEmail} />
 		);
 	}
 
