@@ -9,7 +9,8 @@ export class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			users: this.getInitialUsers()
+			users: this.getInitialUsers(),
+			sort: 'ASC'
 		};
 		this.loadUsers = this.loadUsers.bind(this);
 		this.scrollVertical = this.scrollVertical.bind(this);
@@ -17,6 +18,10 @@ export class App extends React.Component {
 		this.sortByCity = this.sortByCity.bind(this);
 		this.sortByColor = this.sortByColor.bind(this);
 		this.compareColorAsc = this.compareColorAsc.bind(this);
+		this.compareCityAsc = this.compareCityAsc.bind(this);
+		this.compareColorDesc = this.compareColorDesc.bind(this);
+		this.compareCityDesc = this.compareCityDesc.bind(this);
+		this.changeSortingMethod = this.changeSortingMethod.bind(this);
 	}
 
 	getInitialUsers = () => {
@@ -76,7 +81,11 @@ export class App extends React.Component {
 	}
 
 	sortByCity() {
-		this.sortByCityAsc();
+		if (this.state.sort === 'ASC') {
+			this.sortByCityAsc();
+		} else {
+			this.sortByCityDesc();
+		}
 	}
 
 	sortByCityAsc() {
@@ -86,21 +95,27 @@ export class App extends React.Component {
 		});
 	}
 
+	sortByCityDesc() {
+		const sorted = this.state.users.sort(this.compareCityDesc);
+		this.setState({
+			users: sorted
+		});
+	}
+
 	compareCityAsc(a, b) {
-		switch (true) {
-			case (a.location.city < b.location.city) :
-				return -1;
-				break;
-			case (a.location.city > b.location.city) :
-				return 1;
-				break;
-			default:
-				return 0;
-		}
+		return this.compareAsc(a.location.city, b.location.city);
 	}
 
 	sortByColor() {
-		this.sortByColorAsc()
+		if (this.state.sort === 'ASC') {
+			this.sortByColorAsc();
+		} else {
+			this.sortByColorDesc();
+		}
+	}
+
+	compareCityDesc(a, b) {
+		return this.compareDesc(a.location.city, b.location.city);
 	}
 
 	sortByColorAsc() {
@@ -110,18 +125,42 @@ export class App extends React.Component {
 		});
 	}
 
+	sortByColorDesc() {
+		const sorted = this.state.users.sort(this.compareColorDesc);
+		this.setState({
+			users: sorted
+		});
+	}
+
 	compareColorAsc(a, b) {
+		return this.compareAsc(this.getColorPriority(a.dob.age), this.getColorPriority(b.dob.age));
+	}
+
+	compareColorDesc(a, b) {
+		return this.compareDesc(this.getColorPriority(a.dob.age), this.getColorPriority(b.dob.age));
+	}
+
+	compareAsc = (x, y) => {
 		switch (true) {
-			case (this.getColorPriority(a.dob.age) < this.getColorPriority(b.dob.age)) :
+			case (x < y) :
 				return -1;
-				break;
-			case (this.getColorPriority(a.dob.age) > this.getColorPriority(b.dob.age)) :
+			case (x > y) :
 				return 1;
-				break;
 			default:
 				return 0;
 		}
-	}
+	};
+
+	compareDesc = (x, y) => {
+		switch (true) {
+			case (x < y) :
+				return 1;
+			case (x > y) :
+				return -1;
+			default:
+				return 0;
+		}
+	};
 
 	getColorPriority(age) {
 		const priorities = {
@@ -146,10 +185,17 @@ export class App extends React.Component {
 		return colorPriority;
 	}
 
+	changeSortingMethod(event) {
+		this.setState({
+			sort: event.target.value
+		});
+	}
+
 	render() {
 		return (
 			<div className="App">
-				<HeaderContainer sortByCity={this.sortByCity} sortByColor={this.sortByColor}/>
+				<HeaderContainer sortByCity={this.sortByCity} sortByColor={this.sortByColor}
+				                 changeSortingMethod={this.changeSortingMethod}/>
 				<div className="Cards" onScroll={this.scrollHorizontal}>
 					{this.showUsers()}
 					<div className="Clearfix"/>
